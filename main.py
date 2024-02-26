@@ -40,3 +40,5 @@ finally:
     print("Pesquisas concluídas.")
     # Fechar o navegador
     navegador.quit()
+
+"""email extractor"""
