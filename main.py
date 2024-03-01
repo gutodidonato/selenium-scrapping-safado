@@ -15,7 +15,21 @@ import time
 fake = Faker()
 termos_nomes = [fake.name() for _ in range(1000)]
 
-i = 0
+
+def fuxicar_captcha(navegador):
+    try:
+        pagina_html = navegador.page_source
+        print(pagina_html)
+        pagina = WebDriverWait(navegador, 10).until(
+            EC.url_contains("www.google.com/sorry/index?continue")
+        )
+        autogui_clicker.realizar_sequencia_de_cliques()
+        print("encontrado!")
+    except:
+        print("não encontrado")
+        pass
+
+
 lista_sites = []
 
 # Configurar o WebDriver
@@ -38,16 +52,7 @@ try:
     for termo in termos_nomes:
         navegador.get("https://www.google.com")
         try:
-            checkbox = WebDriverWait(navegador, 10).until(
-                EC.presence_of_element_located(
-                    By.CLASS_NAME, "recaptcha-checkbox-border"
-                )
-            )
-            if checkbox:
-                autogui_clicker.realizar_sequencia_de_cliques()
-        except:
-            pass
-        try:
+            fuxicar_captcha(navegador)
             botao_aceitar_tudo = WebDriverWait(navegador, 5).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//div[text()='Aceitar tudo']")
@@ -57,6 +62,7 @@ try:
             if botao_aceitar_tudo.is_displayed():
                 botao_aceitar_tudo.click()
         except:
+            fuxicar_captcha(navegador)
             campo_pesquisa = WebDriverWait(navegador, 10).until(
                 EC.presence_of_element_located((By.NAME, "q"))
             )
@@ -66,9 +72,6 @@ try:
             time.sleep(random.choice(range(5, 20)))
 
             lista_sites.append(navegador.current_url)
-            i += 1
-        if i % 30 == 0:
-            autogui_clicker.realizar_sequencia_de_cliques()
 
 except Exception as e:
     print(f"Erro durante a execução: {e}")
