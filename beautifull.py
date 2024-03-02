@@ -5,6 +5,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import autogui_clicker
 
 
 def extrair_emails(url):
@@ -29,11 +30,13 @@ def extrair_emails(url):
             # Encontrar emails usando a expressão regular
             emails_encontrados = re.findall(email_pattern, all_text_as_string)
 
-            time.sleep(random.choice(range(15, 40)))
+            time.sleep(random.choice(range(15, 20)))
 
             return emails_encontrados if emails_encontrados else []
         else:
-            print(f"Erro na requisição")
+
+            print(f"Estou bloqueado kk")
+            autogui_clicker.realizar_sequencia_de_cliques()
             return []
 
     except Exception as e:

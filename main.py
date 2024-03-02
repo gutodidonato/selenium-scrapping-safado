@@ -1,5 +1,6 @@
 from faker import Faker
 import random
+
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 import autogui_clicker

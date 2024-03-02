@@ -1,19 +1,11 @@
-import pyautogui
-import time
+import pyautogui, sys
 
-# Aguarde alguns segundos antes de começar
-time.sleep(5)
-
-while True:
-    # Verifica se o botão esquerdo do mouse está pressionado
-    if pyautogui.mouseInfo().get("left") == "down":
-        # Obtém as coordenadas atuais do mouse
-        current_mouse_position = pyautogui.position()
-
-        # Salva as coordenadas na lista
-        print(
-            f"Posição atual do mouse: X = {current_mouse_position[0]}, Y = {current_mouse_position[1]}"
-        )
-
-    # Adiciona um pequeno atraso entre as verificações
-    time.sleep(1)
+print("Press Ctrl-C to quit.")
+try:
+    while True:
+        x, y = pyautogui.position()
+        positionStr = "X: " + str(x).rjust(4) + " Y: " + str(y).rjust(4)
+        print(positionStr, end="")
+        print("\b" * len(positionStr), end="", flush=True)
+except KeyboardInterrupt:
+    print("\n")
